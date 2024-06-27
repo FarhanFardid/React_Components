@@ -1,6 +1,7 @@
 // Change the logo images and other info as needed.
 
-import logo from "../assets/images/logo/logo-2.png";
+import { Link } from "react-router-dom";
+import logo from "../assets/images/logo/logo-01.png";
 
 const Footer = () => {
   return (
@@ -12,12 +13,12 @@ const Footer = () => {
               <div className="md:col-span-12 flex justify-center items-center py-4">
                 <img
                   src={logo}
-                  className=" w-25 h-10 md:w-48 md:h-16  mr-4 md:m-2 rounded-md"
+                  className=" w-auto h-12 md:w-auto md:h-24  mr-4 md:m-2 rounded-full bg-white"
                   alt="Rural Agro Logo"
                 />
                 <h2 className="text-lg md:text-2xl font-bold text-yellow-400">
                   {" "}
-                  Rural AgroCommerce{" "}
+                  Rural Agro<span className="text-yellow-300">Commerce</span>{" "}
                   <span className="text-xs md:text-sm align-baseline font-light text-amber-200 block ">
                     Harvesting Trust, Delivering Quality
                   </span>
@@ -32,22 +33,22 @@ const Footer = () => {
               </h2>
               <ul className=" font-normal text-gray-400  text-xs md:text-sm">
                 <li className="mb-3 md:mb-6">
-                  <a href="#" className=" hover:underline">
+                  <Link to="/" className=" hover:underline">
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-3 md:mb-6">
-                  <a href="#" className="hover:underline">
+                  <Link to="/products" className="hover:underline">
                     Products
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-3 md:mb-6">
-                  <a href="#" className="hover:underline">
+                  <a href ="/#deals" className="hover:underline">
                     Deals & Offers
                   </a>
                 </li>
                 <li className="mb-3 md:mb-6">
-                  <a href="#" className="hover:underline">
+                  <a href="/#review" className="hover:underline">
                     Review
                   </a>
                 </li>
@@ -59,24 +60,19 @@ const Footer = () => {
               </h2>
               <ul className=" font-normal text-gray-400  text-xs md:text-sm">
                 <li className="mb-3 md:mb-6">
-                  <a href="#" className="hover:underline">
+                  <a href="/#mission" className="hover:underline">
                     Mission & Vision
                   </a>
                 </li>
                 <li className="mb-3 md:mb-6">
-                  <a href="#" className="hover:underline">
+                  <Link to="/about" className="hover:underline">
                     Our History
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-3 md:mb-6">
-                  <a href="#" className="hover:underline">
-                    Sustainability Practices
-                  </a>
-                </li>
-                <li className="mb-3 md:mb-6">
-                  <a href="#" className="hover:underline">
+                  <Link to="/" className="hover:underline">
                     Career
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -84,24 +80,24 @@ const Footer = () => {
               <h2 className="mb-3 md:mb-6  text-xs md:text-sm font-bold  uppercase ">News</h2>
               <ul className=" font-normal text-gray-400  text-xs md:text-sm">
                 <li className="mb-3 md:mb-6">
-                  <a href="#" className="hover:underline">
+                  <Link to="/" className="hover:underline">
                     Blogs
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-3 md:mb-6">
-                  <a href="#" className="hover:underline">
+                  <a href="/#faq" className="hover:underline">
                     FAQ
                   </a>
                 </li>
                 <li className="mb-3 md:mb-6">
-                  <a href="#" className="hover:underline">
+                  <Link to="/" className="hover:underline">
                     Press Media
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-3 md:mb-6">
-                  <a href="#" className="hover:underline">
+                  <Link to="/" className="hover:underline">
                     Community
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -109,19 +105,19 @@ const Footer = () => {
               <h2 className="mb-3 md:mb-6  text-xs md:text-sm font-bold  uppercase ">Contact</h2>
               <ul className="font-normal text-gray-400  text-xs md:text-sm">
                 <li className="mb-3 md:mb-6">
-                  <a href="#" className="hover:underline">
+                  <Link to="/contact/#contact" className="hover:underline">
                     Hotline
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-3 md:mb-6">
-                  <a href="#" className="hover:underline">
+                  <Link to="/contact/#support" className="hover:underline">
                     Support 24
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-3 md:mb-6">
-                  <a href="#" className="hover:underline">
+                  <Link to="/contact" className="hover:underline">
                     Social Media
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -129,21 +125,18 @@ const Footer = () => {
         </div>
         <div className="px-2 py-5 md:px-4 md:py-12 text-center md:text-left text-white bg-green-900 md:flex md:items-center md:justify-between w-full">
           <span className=" text-xs md:text-sm font-bold text-yellow-400" >
-            © 2024 <a href="">Rural AgroCommerce™</a>. All Rights Reserved.
+            © 2024 <Link to="/home">Rural AgroCommerce™</Link>. All Rights Reserved.
           </span>
           <div className="flex mt-3 md:mt-4 justify-center  space-x-5 rtl:space-x-reverse  text-xs md:text-sm">
-            <a href="#" className="text-white">
-              Privacy
-            </a>
-            <a href="#" className="text-white">
-              Policy
-            </a>
-            <a href="#" className="text-white">
-              Terms
-            </a>
-            <a href="#" className="text-white">
-              Services
-            </a>
+            <Link to="/privacy" className="text-white">
+              Privacy & Policy
+            </Link>
+            <Link to="/terms"  className="text-white">
+              Terms & Conditions
+            </Link>
+            <Link to="/help" className="text-white">
+              Help & Support
+            </Link>
           </div>
         </div>
       </div>
