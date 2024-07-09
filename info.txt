@@ -1,10 +1,7 @@
-TO DO
+TO DO--
 
-1. account Type (authentication)
-2. Dashboard pages
-3. Farmer
-4. Admin
-5. Buyer
-6. Manager
-7. 
+1. Dashboard pages
+2. Admin
+3. Buyer
+4. Manager
 
