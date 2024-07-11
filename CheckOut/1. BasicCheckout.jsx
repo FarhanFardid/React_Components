@@ -95,7 +95,7 @@ const BuyerCheckout = () => {
             <div className="my-3 md:my-8">
               <Link to="/dashboard/buyerShipping">
                 <button className="mx-auto md:w-full p-3 bg-[#5a9a08] rounded-md text-white font-bold text-xs md:text-base cursor-pointer transition-colors  hover:bg-[#4a8206] flex justify-center items-center">
-                  Proceed To Pay{" "}
+                  Confirm Order{" "}
                   <FaArrowRight className="md:h-5 md:w-5 ms-2 md:ms-3 "></FaArrowRight>
                 </button>
               </Link>
