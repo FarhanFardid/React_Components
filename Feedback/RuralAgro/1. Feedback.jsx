@@ -1,5 +1,5 @@
-// Need to Installed React-Swiper , React-icons
-
+// Rural Agro Commerce Projects Feedback with swiper functional
+// Change content and others as necessary
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -24,7 +24,7 @@ const Feedback = () => {
     },
   ];
   return (
-    <div>
+    <div className="py-4 md:py-12" id="review">
       <Title
         main="Customer Feedback"
         sub="Hear What Our Satisfied Customers Have to Say About Their Experience"
