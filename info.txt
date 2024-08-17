@@ -4,4 +4,5 @@ TO DO--
 2. Admin
 3. Buyer
 4. Manager
-
+5. Registration 
+6. Login
