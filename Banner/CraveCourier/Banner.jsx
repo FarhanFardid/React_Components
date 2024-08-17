@@ -5,7 +5,7 @@ import AppleImg from "../assets/images/As.png";
 import GoogleImg from "../assets/images/Gp.png";
 import courierImg from "../assets/images/courier.png";
 
-const Header = () => {
+const Banner = () => {
   return (
     <div className="container-fluid hero h-[478px] p-5 md:p-16 top-[20px] md:top-[221px] ">
       <div className="hero-content flex flex-col md:flex-row-reverse items-center justify-center">
@@ -59,4 +59,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Banner;
