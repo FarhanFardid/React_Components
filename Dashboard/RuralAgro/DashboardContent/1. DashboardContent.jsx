@@ -1,6 +1,3 @@
-// Change and update as necessary.
-// Install react Icons and DaisyUi.
-
 import { NavLink, Outlet } from "react-router-dom";
 import DashboardNav from "../Shared/DashboardNav";
 import Footer from "../Shared/Footer";
@@ -15,6 +12,7 @@ import {
   FaShoppingCart,
   FaClipboardList,
   FaEdit,
+  FaUser,
 } from "react-icons/fa";
 import {
   MdOutlineInventory,
@@ -30,15 +28,19 @@ import {
   MdHomeWork,
   MdBook,
   MdOutlineAddCircle,
-  MdManageHistory,
+  // MdManageHistory,
 } from "react-icons/md";
-import { GiFarmer } from "react-icons/gi";
 import { GrProductHunt } from "react-icons/gr";
+import { useState } from "react";
+import { TiMessage, TiMessages, TiMessageTyping } from "react-icons/ti";
+import useBuyer from "../Hooks/useBuyer";
+import useManager from "../Hooks/useManager";
+import useAdmin from "../Hooks/useAdmin";
 const Dashboard = () => {
-  let isAdmin = false;
-  let isBuyer = false;
-  let isManager = false;
-
+  const { isBuyer } = useBuyer();
+  const { isManager } = useManager();
+  const { isAdmin } = useAdmin();
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div>
       <Navigation></Navigation>
@@ -72,10 +74,27 @@ const Dashboard = () => {
                 <h3 className="text-lg md:text-xl font-medium text-center pt-3 md:pt-7 text-amber-400">
                   Admin DashBoard
                 </h3>
-
                 <li>
                   <NavLink
-                    to="/dashboard/"
+                    to="/dashboard/adminProfile"
+                    className="font-medium flex justify-start items-center mt-5"
+                  >
+                    <FaUser className="w-6 h-6 text-[#D1922B] me-5"></FaUser>
+                    My Profile
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/adminProfileUpdate"
+                    className="font-medium flex justify-start items-center mt-5"
+                  >
+                    <FaUserEdit className="w-6 h-6 text-[#D1922B] me-5"></FaUserEdit>
+                    Profile Management
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/adminUserManagement"
                     className="font-medium flex justify-start items-center mt-5"
                   >
                     <FaUserFriends className="w-6 h-6 text-[#D1922B] me-5"></FaUserFriends>
@@ -84,7 +103,7 @@ const Dashboard = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/dashboard/"
+                    to="/dashboard/adminInventoryManagement"
                     className="font-medium flex justify-start items-center mt-5"
                   >
                     <MdOutlineInventory className="w-6 h-6 text-[#D1922B] me-5" />
@@ -144,7 +163,16 @@ const Dashboard = () => {
                 </h3>
                 <li>
                   <NavLink
-                    to="/dashboard/"
+                    to="/dashboard/buyerProfile"
+                    className="font-medium flex justify-start items-center mt-5"
+                  >
+                    <FaUser className="w-6 h-6 text-[#D1922B] me-5"></FaUser>
+                    My Profile
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/buyerProfileUpdate"
                     className="font-medium flex justify-start items-center mt-5"
                   >
                     <FaUserEdit className="w-6 h-6 text-[#D1922B] me-5"></FaUserEdit>
@@ -153,7 +181,7 @@ const Dashboard = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/dashboard/"
+                    to="/dashboard/buyerCart"
                     className="font-medium flex justify-start items-center mt-5"
                   >
                     <FaShoppingCart className="w-6 h-6 text-[#D1922B] me-5" />
@@ -162,7 +190,7 @@ const Dashboard = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/dashboard/"
+                    to="/dashboard/buyerOrders"
                     className="font-medium flex justify-start items-center mt-5"
                   >
                     <FaBookReader className="w-6 h-6 text-[#D1922B] me-5" />
@@ -171,20 +199,45 @@ const Dashboard = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/dashboard/"
+                    to="/dashboard/buyerTransactions"
                     className="font-medium flex justify-start items-center mt-5"
                   >
                     <MdPayments className="w-6 h-6 text-[#D1922B] me-5" />
-                    Payment History
+                    My Transactions
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
-                    to="/dashboard/"
-                    className="font-medium flex justify-start items-center mt-5"
+                    to="/dashboard/buyerComposeMessages"
+                    className="font-medium flex justify-start items-center mt-5 relative"
+                    onMouseOver={() => setIsOpen(true)}
+                    onMouseLeave={() => setIsOpen(false)}
+                    onClick={() => setIsOpen(!isOpen)}
                   >
-                    <MdChat className="w-6 h-6 text-[#D1922B] me-5" />
-                    Messages
+                    <TiMessages className="w-6 h-6 text-[#D1922B] me-5" />
+                    Communication Hub
+                    {isOpen && (
+                      <ul className="absolute rounded-md shadow-md py-1 mt-40 z-20 menu p-2 w-full bg-green-700 text-[#FDE67D] min-h-full">
+                        <li>
+                          <NavLink
+                            to="/dashboard/buyerReceivedMessages"
+                            className="font-medium flex justify-start items-center mt-5"
+                          >
+                            <TiMessage className="w-6 h-6 text-[#D1922B] me-5" />
+                            Received Messages
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            to="/dashboard/buyerSentMessages"
+                            className="font-medium flex justify-start items-center mt-5 "
+                          >
+                            <TiMessageTyping className="w-6 h-6 text-[#D1922B] me-5" />
+                            Sent Messages
+                          </NavLink>
+                        </li>
+                      </ul>
+                    )}
                   </NavLink>
                 </li>
               </>
@@ -195,7 +248,16 @@ const Dashboard = () => {
                 </h3>
                 <li>
                   <NavLink
-                    to="/dashboard/"
+                    to="/dashboard/managerProfile"
+                    className="font-medium flex justify-start items-center mt-5"
+                  >
+                    <FaUser className="w-6 h-6 text-[#D1922B] me-5"></FaUser>
+                    My Profile
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/managerProfileUpdate"
                     className="font-medium flex justify-start items-center mt-5"
                   >
                     <FaUserEdit className="w-6 h-6 text-[#D1922B] me-5"></FaUserEdit>
@@ -204,16 +266,16 @@ const Dashboard = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/dashboard/"
+                    to="/dashboard/managerProductPipelineManagement"
                     className="font-medium flex justify-start items-center mt-5"
                   >
                     <FaClipboardList className="w-6 h-6 text-[#D1922B] me-5" />
-                    Product Listing Pipeline
+                    Product Listing Management
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
-                    to="/dashboard/"
+                    to="/dashboard/managerInventoryManagement"
                     className="font-medium flex justify-start items-center mt-5"
                   >
                     <MdHomeWork className="w-6 h-6 text-[#D1922B] me-5" />
@@ -222,29 +284,45 @@ const Dashboard = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/dashboard/"
+                    to="/dashboard/managerOrderManagement"
                     className="font-medium flex justify-start items-center mt-5"
                   >
                     <MdBook className="w-6 h-6 text-[#D1922B] me-5" />
-                    Order Management
+                    Order Review Portal
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
-                    to="/dashboard/"
-                    className="font-medium flex justify-start items-center mt-5"
-                  >
-                    <GiFarmer className="w-6 h-6 text-[#D1922B] me-5" />
-                    Farmer Management
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/dashboard/"
-                    className="font-medium flex justify-start items-center mt-5"
+                    to="/dashboard/managerComposeMessages"
+                    className="font-medium flex justify-start items-center mt-5 relative"
+                    onMouseOver={() => setIsOpen(true)}
+                    onMouseLeave={() => setIsOpen(false)}
+                    onClick={() => setIsOpen(!isOpen)}
                   >
                     <MdChat className="w-6 h-6 text-[#D1922B] me-5" />
-                    Messages
+                    Communication Hub
+                    {isOpen && (
+                      <ul className="absolute rounded-md shadow-md py-1 mt-40 z-20 menu p-2 w-full bg-green-700 text-[#FDE67D] min-h-full">
+                        <li>
+                          <NavLink
+                            to="/dashboard/managerReceivedMessages"
+                            className="font-medium flex justify-start items-center mt-5"
+                          >
+                            <TiMessage className="w-6 h-6 text-[#D1922B] me-5" />
+                            Received Messages
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            to="/dashboard/managerSentMessages"
+                            className="font-medium flex justify-start items-center mt-5 "
+                          >
+                            <TiMessageTyping className="w-6 h-6 text-[#D1922B] me-5" />
+                            Sent Messages
+                          </NavLink>
+                        </li>
+                      </ul>
+                    )}
                   </NavLink>
                 </li>
               </>
@@ -255,7 +333,16 @@ const Dashboard = () => {
                 </h3>
                 <li>
                   <NavLink
-                    to="/dashboard/"
+                    to="/dashboard/farmerProfile"
+                    className="font-medium flex justify-start items-center mt-5"
+                  >
+                    <FaUser className="w-6 h-6 text-[#D1922B] me-5"></FaUser>
+                    My Profile
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/farmerProfileUpdate"
                     className="font-medium flex justify-start items-center mt-5"
                   >
                     <FaUserEdit className="w-6 h-6 text-[#D1922B] me-5"></FaUserEdit>
@@ -264,7 +351,7 @@ const Dashboard = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/dashboard/addProduct"
+                    to="/dashboard/farmerAddProduct"
                     className="font-medium flex justify-start items-center mt-5"
                   >
                     <MdOutlineAddCircle className="w-6 h-6 text-[#D1922B] me-5" />
@@ -274,14 +361,14 @@ const Dashboard = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/dashboard/"
+                    to="/dashboard/farmerManageProduct"
                     className="font-medium flex justify-start items-center mt-5"
                   >
                     <FaEdit className="w-6 h-6 text-[#D1922B] me-5" />
                     Product Management
                   </NavLink>
                 </li>
-                <li>
+                {/* <li>
                   <NavLink
                     to="/dashboard/"
                     className="font-medium flex justify-start items-center mt-5"
@@ -289,7 +376,7 @@ const Dashboard = () => {
                     <MdManageHistory className="w-6 h-6 text-[#D1922B] me-5" />
                     Product Listing History
                   </NavLink>
-                </li>
+                </li> */}
               </>
             )}
             <hr className="my-5" />
