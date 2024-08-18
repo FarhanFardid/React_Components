@@ -1,4 +1,3 @@
-// Change and Updates content and data as necessary.
 import { useContext } from "react";
 import DashboardTitle from "../../../../components/Headers/DashboardTitle";
 import CartContext from "../../../../context/CartProvider/CartProvider";

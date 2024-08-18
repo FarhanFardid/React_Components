@@ -1,4 +1,3 @@
-// Change the content and styling as necessary.
 import { FaMessage } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";

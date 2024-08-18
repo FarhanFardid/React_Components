@@ -1,4 +1,3 @@
-// Change and updates as necessary.
 import { FiSend } from "react-icons/fi";
 import DashboardTitle from "../../../../components/Headers/DashboardTitle";
 

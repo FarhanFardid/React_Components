@@ -1,4 +1,3 @@
-// Change and updates as necessary.
 import { Link } from "react-router-dom";
 import DashboardTitle from "../../../../components/Headers/DashboardTitle";
 import "../buyer.css";
