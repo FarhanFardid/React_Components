@@ -1,18 +1,72 @@
-import { FaArrowCircleUp, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
-const ProductPipelineList = ({ product, index }) => {
+const ProductPipelineList = ({ product, index, triggerRefetch }) => {
   const {
-    product_id,
-    farmer_id,
-    product_name,
-    description,
-    category,
-    price,
-    quantity,
-    unit,
-    created_time,
-    image,
+    _id,
+    productName,
+    productDescription,
+    productCategory,
+    productPrice,
+    productQuantity,
+    productUnit,
+    status,
+    farmerEmail,
+    productImage,
   } = product;
+
+  const handleStatus = (id) => {
+    console.log("Product to Update", id);
+    fetch(`http://localhost:3000/managerProductStatusUpdate/${id}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          toast.success("Product Status Updated to Approved");
+          triggerRefetch();
+        } else {
+          toast.error("Product Status Updates Failed");
+        }
+      });
+  };
+  const handleDeleteProduct = (id) => {
+    console.log(id);
+    Swal.fire({
+      title: "Remove The Product?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Remove",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/farmerProductDelete/${id}`, {
+          method: "DELETE",
+          headers: {
+            "content-type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount > 0) {
+              Swal.fire(
+                "Deleted!",
+                "Product has been successfully removed.",
+                "Success"
+              );
+              triggerRefetch();
+            }
+          });
+      }
+    });
+  };
   return (
     <tr>
       <th>
@@ -21,28 +75,28 @@ const ProductPipelineList = ({ product, index }) => {
       <td>
         <div className="avatar">
           <div className="mask mask-square rounded-md h-12 w-12">
-            <img src={image} alt="Pro_image" />
+            <img src={productImage} alt="Pro_image" />
           </div>
         </div>
       </td>
       <td>
-        <div className="font-semibold">{product_id}</div>
+        <div className="font-semibold">{_id}</div>
       </td>
       <td>
-        <div className="font-semibold">{farmer_id}</div>
+        <div className="font-semibold">{productName}</div>
       </td>
-      <td>
-        <div className="font-semibold">{product_name}</div>
-      </td>
-      <td>{description}</td>
-      <td>{category}</td>
-      <td>{price}/-</td>
-      <td>{quantity}</td>
-      <td>{unit}</td>
-      <td>{created_time}</td>
+      <td className="mx-auto"><div>{productDescription}</div></td>
+      <td>{productCategory}</td>
+      <td>{productPrice}/-</td>
+      <td>{productQuantity}</td>
+      <td>{productUnit}</td>
+      <td>{farmerEmail}</td>
+      <td>{status}</td>
       <td>
         <button
-          onClick={() => console.log(product_id)}
+          onClick={() => {
+            handleStatus(_id);
+          }}
           className="btn-xs btn-circle bg-green-600 text-white hover:bg-green-800"
         >
           {" "}
@@ -51,20 +105,13 @@ const ProductPipelineList = ({ product, index }) => {
       </td>
       <td>
         <button
-          onClick={() => console.log(product_id)}
-          className="btn-xs btn-circle bg-yellow-700 text-white hover:bg-yellow-800"
-        >
-          {" "}
-          <FaArrowCircleUp className="w-4 h-4 mx-auto font-bold" />
-        </button>
-      </td>
-      <td>
-        <button
-          onClick={() => console.log(product_id)}
+          onClick={() => {
+            handleDeleteProduct(_id);
+          }}
           className="btn-xs btn-circle bg-red-700 text-white hover:bg-red-800"
         >
           {" "}
-          <FaTimesCircle className="w-4 h-4 mx-auto font-bold " />
+          <MdDelete className="w-4 h-4 mx-auto font-bold " />
         </button>
       </td>
     </tr>

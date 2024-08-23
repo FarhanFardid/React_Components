@@ -1,11 +1,12 @@
-import { useContext } from "react";
-import CartContext from "../../../../context/CartProvider/CartProvider";
 import "../buyer.css";
-import { MdDelete, MdArrowCircleRight } from "react-icons/md";
 import DashboardTitle from "../../../../components/Headers/DashboardTitle";
-import { Link } from "react-router-dom";
-
+import CartContext from "../../../../context/CartProvider/CartProvider";
+import CartList from "./CartList";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../../../context/AuthProvider/AuthProvider";
 const CartManagement = () => {
+  const { user } = useContext(AuthContext);
+  const [ItemsInCart, setItemsInCart] = useState([]);
   const {
     cartItems,
     handleIncrementQuantity,
@@ -13,6 +14,19 @@ const CartManagement = () => {
     handleDelete,
     calculateTotalPrice,
   } = useContext(CartContext);
+  console.log(cartItems);
+  
+  // Load the updated data in the Cart whenever the cartItems is updated
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`http://localhost:3000/cart/${user?.email}`);
+      const data = await response.json();
+      const filteredItems = data.filter((item) => item.status === "pending");
+      setItemsInCart(filteredItems);
+    };
+    fetchData();
+  }, [cartItems, user]);
+  console.log(ItemsInCart);
   return (
     <div className="custom-buyer-bg bg-no-repeat bg-center p-2 md:p-8 max-h-full md:h-full">
       <DashboardTitle
@@ -35,75 +49,21 @@ const CartManagement = () => {
                 <th>Price (Tk)</th>
                 <th>Quantity</th>
                 <th>Unit</th>
+                <th>Checkout</th>
                 <th>Delete</th>
               </tr>
             </thead>
             <tbody>
-              {cartItems &&
-                cartItems.map(
-                  (item, index) =>
-                    item && (
-                      <tr key={index}>
-                        <th className="text-center">
-                          <label>{index + 1}.</label>
-                        </th>
-                        <td>
-                          <div className="avatar flex justify-center">
-                            <div className="mask mask-square rounded-md h-12 w-12">
-                              <img
-                                src={item.productImage || "default-image.png"}
-                                alt="cart_img"
-                              />
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="font-semibold text-center">
-                            {item.productName}
-                          </div>
-                        </td>
-                        <td>
-                          <div className="font-semibold text-center">
-                            {item.productPrice} /-
-                          </div>
-                        </td>
-                        <td>
-                          <div className="font-semibold text-center flex md:flex-row flex-col justify-center items-center">
-                            <button
-                              className="bg-red-700  w-3 md:w-5 text-center rounded-btn text-white text-xs md:text-sm"
-                              onClick={() => handleDecrementQuantity(index)}
-                            >
-                              -
-                            </button>
-                            <span className="py-1 mx-2">{item.quantity}</span>
-                            <button
-                              className="bg-green-700 w-3 md:w-5 text-center rounded-btn text-white text-xs md:text-sm"
-                              onClick={() => handleIncrementQuantity(index)}
-                            >
-                              +
-                            </button>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="font-semibold text-center">
-                            {item.productUnit}
-                          </div>
-                        </td>
-                        <td>
-                          <div className="flex justify-center">
-                            {item.id && (
-                              <button
-                                className=" bg-red-700 rounded-full hover:bg-red-800 p-1"
-                                onClick={() => handleDelete(item.id)}
-                              >
-                                <MdDelete className="text-white w-4 h-4 md:w-5 md:h-5 " />
-                              </button>
-                            )}
-                          </div>
-                        </td>
-                      </tr>
-                    )
-                )}
+              {ItemsInCart.map((item, index) => (
+                <CartList
+                  key={item._id}
+                  item={item}
+                  index={index}
+                  handleDecrementQuantity={handleDecrementQuantity}
+                  handleIncrementQuantity={handleIncrementQuantity}
+                  handleDelete={handleDelete}
+                ></CartList>
+              ))}
             </tbody>
           </table>
         </div>
@@ -115,15 +75,6 @@ const CartManagement = () => {
             </span>{" "}
             Tk.
           </div>
-          <button className="bg-green-600   text-white py-1 px-2 md:py-2 md:px-4 text-sm md:text-lg  font-semibold rounded-lg hover:bg-green-800 hover:scale-110">
-            <Link
-              to="/dashboard/buyerCheckout"
-              className="text-white flex items-center justify-center font-semibold"
-            >
-              Checkout{" "}
-              <MdArrowCircleRight className="h-4 w-4 md:h-6 md:w-6  ms-2 rounded-full" />
-            </Link>
-          </button>
         </div>
       </div>
     </div>

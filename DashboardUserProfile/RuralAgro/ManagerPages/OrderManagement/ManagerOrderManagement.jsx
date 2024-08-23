@@ -1,62 +1,51 @@
+import { useContext, useEffect, useState } from "react";
 import DashboardTitle from "../../../../components/Headers/DashboardTitle";
 import OrderManageList from "./OrderManageList";
+import { AuthContext } from "../../../../context/AuthProvider/AuthProvider";
 const ManagerOrderManagement = () => {
-  const ordersInfo = [    {
-    order_Id: 'O2407051530',
-    buyer_Id: 1001,
-    orderStatus: "Confirmed",
-    orderPlaced: "2024-07-05 15:30:00",
-    deliveryAddress: "123 Main St, Dhaka",
-    deliveryDate: "2024-07-15",
-    deliveryStatus: "Delivered"
-},
-{
-    order_Id: 'O2407061145',
-    buyer_Id: 1002,
-    orderStatus: "Confirmed",
-    orderPlaced: "2024-07-06 11:45:00",
-    deliveryAddress: "456 Green St, Dhaka",
-    deliveryDate: "2024-07-18",
-    deliveryStatus: "In Transit"
-},
-{
-    order_Id: 'O2407070930',
-    buyer_Id: 1003,
-    orderStatus: "Confirmed",
-    orderPlaced: "2024-07-08 09:30:00",
-    deliveryAddress: "Chawkbazar, Chittagong",
-    deliveryDate: "2024-07-19",
-    deliveryStatus: "In-Transit"
-},
-{
-    order_Id: 'O2407081040',
-    buyer_Id: 1004,
-    orderStatus: "Confirmed",
-    orderPlaced: "2024-07-08 10:40:00",
-    deliveryAddress: "321 St,sholosohor Chittagong",
-    deliveryDate: "2024-07-15",
-    deliveryStatus: "Delayed"
-},
-{
-    order_Id: 'O2407091230',
-    buyer_Id: 1005,
-    orderStatus: "Processing",
-    orderPlaced: "2024-07-09 12:30:00",
-    deliveryAddress: "654 Metropolis, Dhaka",
-    deliveryDate: "2024-07-21",
-    deliveryStatus: "Processing"
-}];
+  const { user } = useContext(AuthContext);
+  const [managerDetails, setManagerDetails] = useState([]);
+  const [ordersInfo, setOrdersInfo] = useState([]);
+  const [triggerRefetch, setTriggerRefetch] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        `http://localhost:3000/managers/${user?.email}`
+      );
+      const data = await response.json();
+      // console.log(data);
+      setManagerDetails(data);
+    };
+    fetchData();
+  }, [user]);
+
+  useEffect(() => {
+    const fetchOrderData = async () => {
+      const response = await fetch(
+        `http://localhost:3000/managerOrderView/${managerDetails.location}`
+      );
+      const data = await response.json();
+      console.log(data);
+      setOrdersInfo(data);
+    };
+    fetchOrderData();
+  }, [managerDetails,triggerRefetch]);
+  console.log(ordersInfo);
+  const handleRefetch = () => {
+    setTriggerRefetch(!triggerRefetch);
+  };
+
   return (
     <div className="custom-manager-bg bg-no-repeat bg-center p-2 md:p-8 max-h-full md:h-full">
       <DashboardTitle
-        main="Order Review Portal"
+        main="Order Management"
         sub="Streamline and Oversee Buyer Orders with Ease"
       ></DashboardTitle>
 
       <div className="w-full mx-auto p-3 md:p-4 my-5 md:my-8 bg-white bg-opacity-80 rounded-lg shadow-lg">
         <div className="overflow-x-auto">
           <h1 className="text-center text-[#409a08] font-semibold text-lg md:text-2xl py-3 md:py-7">
-            Orders Summary List
+            {managerDetails.location} Warehouse Orders Summary List
           </h1>
           <table className="table">
             <thead>
@@ -64,16 +53,22 @@ const ManagerOrderManagement = () => {
                 <th>Sl No.</th>
                 <th>Order Id</th>
                 <th>Buyer Id</th>
-                <th>Order Status</th>
                 <th>Order Placed On </th>
                 <th>Delivery Address</th>
-                <th>Delivery Date</th>
+                <th>Estimated Delivery Date</th>
                 <th>Delivery Status</th>
+                <th>View Details Info</th>
+                <th>Update Delivery Status</th>
               </tr>
             </thead>
             <tbody className="text-center font-medium">
-              {ordersInfo.map((o, index) => (
-                <OrderManageList key={index} order={o} index={index} />
+              {ordersInfo.map((order, index) => (
+                <OrderManageList
+                  key={order._id}
+                  order={order}
+                  index={index}
+                  handleRefetch={handleRefetch}
+                />
               ))}
             </tbody>
           </table>

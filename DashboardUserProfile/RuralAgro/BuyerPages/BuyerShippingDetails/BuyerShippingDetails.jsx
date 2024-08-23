@@ -2,14 +2,22 @@ import { Link } from "react-router-dom";
 import DashboardTitle from "../../../../components/Headers/DashboardTitle";
 import "../buyer.css";
 import { FaArrowCircleRight, FaMoneyBillWaveAlt } from "react-icons/fa";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../../../context/AuthProvider/AuthProvider";
 const BuyerShippingDetails = () => {
-  const buyerDetails = {
-    buyer_id: 12345,
-    buyer_name: "Faridul Haque",
-    buyer_email: "faridul.haque@ruralagro.com",
-    address: "221B, Old Chawkbazar, Chittagong",
-    mobile_num: "+880-136456789",
-  };
+  const { user } = useContext(AuthContext);
+  const [buyerDetails, setBuyerDetails] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        `http://localhost:3000/buyers/${user?.email}`
+      );
+      const data = await response.json();
+      console.log(data);
+      setBuyerDetails(data);
+    };
+    fetchData();
+  }, [user]);
 
   return (
     <div className="custom-buyer-bg bg-no-repeat bg-center p-2 md:p-8 max-h-full md:h-full">
@@ -23,66 +31,63 @@ const BuyerShippingDetails = () => {
           Confirm Order Shipment Address
         </h1>
         <div className="flex  text-sm md:text-xl font-bold  mb-1 items-center justify-center">
-          <label className="font-bold mb-1 text-[#5a9a08]" htmlFor="buyer-name">
+          <label className="font-bold mb-1 text-[#5a9a08]" htmlFor="buyerName">
             Buyer Name:
           </label>
           <input
             className="w-[18rem] md:w-[25rem] p-2 ms-2 mt-1 border border-gray-300 rounded-lg box-border text-sm md:text-xl"
             type="text"
-            id="buyer-name"
-            name="buyer-name"
+            id="buyerName"
+            name="buyerName"
             placeholder="Enter your name"
             required
-            value={buyerDetails.buyer_name}
+            value={buyerDetails.name}
           />
         </div>
         <div className="flex  text-sm md:text-xl font-bold  mb-1 items-center justify-center">
-          <label
-            className="font-bold mb-1 text-[#5a9a08]"
-            htmlFor="buyer-email"
-          >
+          <label className="font-bold mb-1 text-[#5a9a08]" htmlFor="buyerEmail">
             Buyer Email:
           </label>
           <input
             className="w-[18rem] md:w-[25rem] p-2 ms-2 mt-1 border border-gray-300 rounded-lg box-border text-sm md:text-xl"
             type="email"
-            id="buyer-email"
-            name="buyer-email"
+            id="buyerEmail"
+            name="buyerEmail"
             placeholder="Enter your email"
             required
-            value={buyerDetails.buyer_email}
+            value={buyerDetails.email}
           />
         </div>
         <div className="flex  text-sm md:text-xl font-bold  mb-1 items-center justify-center">
           <label
             className="font-bold mb-1 text-[#5a9a08]"
-            htmlFor="buyer-mobile"
+            htmlFor="buyerMobile"
           >
             Mobile Number:
           </label>
           <input
             className="w-[18rem] md:w-[25rem] p-2 ms-2 mt-1 border border-gray-300 rounded-lg box-border text-sm md:text-xl"
-            id="buyer-mobile"
-            name="buyer-mobile"
+            id="buyerMobile"
+            name="buyerMobile"
             placeholder="Enter your phone number"
             required
-            value={buyerDetails.mobile_num}
+            value={buyerDetails.mobileNumber}
           />
         </div>
         <div className="flex  text-sm md:text-xl font-bold  mb-1 items-center justify-center">
           <label
             className="font-bold mb-1 text-[#5a9a08]"
-            htmlFor="buyer-address"
+            htmlFor="buyerAddress"
           >
             Address:
           </label>
           <input
             className="w-[18rem] md:w-[25rem] p-2 ms-2 mt-1 border border-gray-300 rounded-lg box-border text-sm md:text-xl"
-            id="buyer-address"
-            name="buyer-address"
+            id="buyerAddress"
+            name="buyerAddress"
             placeholder="Enter your address"
             required
-            value={buyerDetails.address}
+            value={buyerDetails.location}
           />
         </div>
         <div className="my-3 md:my-8">

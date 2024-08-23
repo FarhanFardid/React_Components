@@ -1,7 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 import DashboardTitle from "../../../../components/Headers/DashboardTitle";
-
-const OrderDetails = () => {
+const ManagerOrderDetails = () => {
   const orderInfo = useLoaderData();
   console.log(orderInfo);
   const {
@@ -11,6 +10,9 @@ const OrderDetails = () => {
     deliveryStatus,
     estimatedDeliveryDate,
     orderPlacedDate,
+    buyerId,
+    buyerEmail,
+    buyerContact,
     productId,
     productImg,
     productName,
@@ -21,10 +23,10 @@ const OrderDetails = () => {
     _id,
   } = orderInfo;
   return (
-    <div className="custom-buyer-bg bg-no-repeat bg-center p-2 md:p-8 max-h-full md:h-full">
+    <div className="custom-manager-bg bg-no-repeat bg-center p-2 md:p-8 max-h-full md:h-full">
       <DashboardTitle
-        main="Order Details"
-        sub="Your Order at a Glance"
+        main="Order Detail Information"
+        sub="Order info at a Glance"
       ></DashboardTitle>
 
       <div className="w-[80%] md:w-[60%] mx-auto my-3 md:my-20 p-6 md:p-20 bg-black bg-opacity-70 text-white shadow-lg rounded-md text-center">
@@ -33,7 +35,7 @@ const OrderDetails = () => {
             <div className="details bg-white bg-opacity-60 text-black p-3 md:p-6 rounded-md">
               <div>
                 <img
-                  className="w-28 h-28 md:w-40 md:h-40 rounded-full mx-auto mb-4 md:mb-8 bg-black"
+                  className="w-28 h-28 md:w-48 md:h-48 rounded-full mx-auto mb-4 md:mb-8 bg-black"
                   src={productImg}
                   alt="Product Image"
                 />
@@ -54,7 +56,17 @@ const OrderDetails = () => {
                 <strong>Total Price:</strong> <span>{totalPayment}/-</span>
               </p>
               <p className="font-medium pb-2 text-xs md:text-sm">
-                <strong>Product Origin: </strong>{" "}
+                <strong>Buyer Id: </strong> <span> {buyerId}</span>
+              </p>
+              <p className="font-medium pb-2 text-xs md:text-sm">
+                <strong>Buyer Email: </strong> <span> {buyerEmail}</span>
+              </p>
+              <p className="font-medium pb-2 text-xs md:text-sm">
+                <strong>Buyer Contact: </strong> <span> {buyerContact}</span>
+              </p>
+
+              <p className="font-medium pb-2 text-xs md:text-sm">
+                <strong>Warehouse: </strong>{" "}
                 <span> {warehouseLocation}</span>
               </p>
               <p className="font-medium pb-2 text-xs md:text-sm">
@@ -89,4 +101,4 @@ const OrderDetails = () => {
   );
 };
 
-export default OrderDetails;
+export default ManagerOrderDetails;

@@ -1,52 +1,23 @@
+import { useContext, useEffect, useState } from "react";
 import DashboardTitle from "../../../../components/Headers/DashboardTitle";
 import OrderList from "./OrderList";
+import { AuthContext } from "../../../../context/AuthProvider/AuthProvider";
 const BuyerOrders = () => {
-  const ordersInfo = [
-    {
-      orderId: 'O2407011030',
-      numOfProducts: 3,
-      quantity: 23,
-      units: "Kg",
-      totalPrice: 2500,
-      orderStatus: "Processed",
-      orderPlacedOn: "2024-07-01 10:30:25",
-      deliveryDate: "2024-07-05",
-      deliveryStatus: "Delivered",
-    },
-    {
-      orderId: 'O2407021245',
-      numOfProducts: 4,
-      quantity: 20,
-      units: "kg",
-      totalPrice: 1800,
-      orderStatus: "Shipped",
-      orderPlacedOn: "2024-07-02 12:45:00",
-      deliveryDate: "2024-07-10",
-      deliveryStatus: "In Transit",
-    },
-    {
-      orderId: 'O2407031500',
-      numOfProducts: 5,
-      quantity: 15,
-      units: "kg",
-      totalPrice: 900,
-      orderStatus: "Pending",
-      orderPlacedOn: "2024-07-03 15:00:00",
-      deliveryDate: "2024-07-15",
-      deliveryStatus: "Pending",
-    },
-    {
-      orderId: 'O2407051530',
-      numOfProducts: 3,
-      quantity: 10,
-      units: "kg",
-      totalPrice: 600,
-      orderStatus: "pending",
-      orderPlacedOn: "2024-07-05 15:30:00",
-      deliveryDate: "2024-07-17",
-      deliveryStatus: "Pending",
-    },
-  ];
+  const { user } = useContext(AuthContext);
+  const [ordersInfo, setOrdersInfo] = useState([]);
+  useEffect(() => {
+    const fetchOrdersData = async () => {
+      const response = await fetch(
+        `http://localhost:3000/orders/${user?.email}`
+      );
+      const data = await response.json();
+      console.log(data);
+      setOrdersInfo(data);
+    };
+    fetchOrdersData();
+  }, [user]);
+  console.log(ordersInfo);
+
   return (
     <div className="custom-buyer-bg bg-no-repeat bg-center p-2 md:p-8 max-h-full md:h-full">
       <DashboardTitle
@@ -63,17 +34,23 @@ const BuyerOrders = () => {
             <thead>
               <tr className="text-center font-bold text-black">
                 <th>Sl No.</th>
-                <th>Order Id</th>
-                <th>Order Status</th>
+                <th>Product Image</th>
+                <th>Product Name</th>
+                <th>Product Quantity </th>
+                <th>Total Cost </th>
                 <th>Order Placed On </th>
                 <th>Delivery Date</th>
                 <th>Delivery Status</th>
-                <th>View Order Details</th>
+                <th>View Details</th>
               </tr>
             </thead>
             <tbody className="text-center font-medium">
-              {ordersInfo.map((order, index) => (
-                <OrderList key={index} order={order} index={index} />
+              {ordersInfo.map((orderInfo, index) => (
+                <OrderList
+                  key={orderInfo._id}
+                  orderInfo={orderInfo}
+                  index={index}
+                />
               ))}
             </tbody>
           </table>
