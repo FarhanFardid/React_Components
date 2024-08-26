@@ -53,56 +53,99 @@ const BuyerCheckout = () => {
   )}`;
 
   const handleOrderConfirm = () => {
-    const orderDetails = {
-      buyerId: buyerDetails._id,
-      buyerEmail: buyerDetails.email,
-      buyerContact: buyerDetails.mobileNumber,
-      deliveryLocation: buyerDetails.location,
-      warehouseLocation: cartProduct.farmerLocation,
-      productId: cartProduct.productId,
-      cartListId: cartProduct._id,
-      productName: cartProduct.productName,
-      productImg: cartProduct.productImage,
-      productQuantity: cartProduct.quantity,
-      productUnit: cartProduct.productUnit,
-      totalPayment: totalPrice(),
-      PaymentMethod: "Cash on Delivery",
-      orderPlacedDate: orderPlacedOn,
-      estimatedDeliveryDate: formattedEstimatedDeliveryDate,
-      deliveryStatus: "In Transit",
-    };
-    console.log(orderDetails);
-    fetch(`http://localhost:3000/orders`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(orderDetails),
-    })
+    //  Product quantity check in the database
+    fetch(
+      `http://localhost:3000/productQuantityCheck/${cartProduct.productId}`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ cartProQuantity: cartProduct.quantity }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
-        if (data.insertedId) {
-          Swal.fire({
-            title: "Success",
-            text: "New Order is Placed Successfully ",
-            icon: "success",
-            confirmButtonText: "Cool",
-          });
-          navigate("/dashboard/buyerOrders");
-        }
-      });
+        if (data.isQuantityAvailable) {
+          const orderDetails = {
+            buyerId: buyerDetails._id,
+            buyerEmail: buyerDetails.email,
+            buyerContact: buyerDetails.mobileNumber,
+            deliveryLocation: buyerDetails.location,
+            warehouseLocation: cartProduct.farmerLocation,
+            productId: cartProduct.productId,
+            cartListId: cartProduct._id,
+            productName: cartProduct.productName,
+            productImg: cartProduct.productImage,
+            productQuantity: cartProduct.quantity,
+            productUnit: cartProduct.productUnit,
+            totalPayment: totalPrice(),
+            PaymentMethod: "Cash on Delivery",
+            orderPlacedDate: orderPlacedOn,
+            estimatedDeliveryDate: formattedEstimatedDeliveryDate,
+            deliveryStatus: "In Transit",
+          };
+          console.log(orderDetails);
+          fetch(`http://localhost:3000/orders`, {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(orderDetails),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.insertedId) {
+                Swal.fire({
+                  title: "Success",
+                  text: "New Order is Placed Successfully ",
+                  icon: "success",
+                  confirmButtonText: "Cool",
+                });
+                navigate("/dashboard/buyerOrders");
+              }
+            });
 
-    fetch(`http://localhost:3000/cartStatus/${cartProduct._id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.modifiedCount > 0) {
-          toast.success("Cart Product's Status Updated");
+          fetch(`http://localhost:3000/cartStatus/${cartProduct._id}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              if (data.modifiedCount > 0) {
+                toast.success("Cart Product's Status Updated");
+              }
+            });
+          // Reduce the product quantity in the database after Order Confirmation
+          fetch(
+            `http://localhost:3000/productQuantityUpdate/${cartProduct.productId}`,
+            {
+              method: "PATCH",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify({ decreaseQuantity: cartProduct.quantity }),
+            }
+          )
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.modifiedCount > 0) {
+                toast.success(
+                  "Product Quantity Updated After Order Placement."
+                );
+              }
+            });
+        } else {
+          //   warning  and stop execution if product quantity is not available for order
+          Swal.fire({
+            title: "Warning",
+            text: "Insufficient Product Quantity in Stock.",
+            icon: "warning",
+            confirmButtonText: "OK",
+          });
         }
       });
   };
