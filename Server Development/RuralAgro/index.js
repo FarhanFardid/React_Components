@@ -518,6 +518,40 @@ async function run() {
       res.send(result);
     });
 
+    // ------------------------ Product Available Quantity Check API ----------------------
+    app.post("/productQuantityCheck/:id", async (req, res) => {
+      const id = req.params.id;
+      const { cartProQuantity } = req.body;
+      const filter = { _id: new ObjectId(id) };
+      console.log("product Quantity Check API Hitting ");
+      const product = await farmerProductsCollection.findOne(filter);
+      if (product && product.productQuantity >= cartProQuantity) {
+        res.json({ isQuantityAvailable: true });
+      } else {
+        res.json({ isQuantityAvailable: false });
+      }
+    });
+
+    // ------------------------ Product Quantity Update API --------------------------
+    app.patch("/productQuantityUpdate/:id", async (req, res) => {
+      const id = req.params.id;
+      const { decreaseQuantity } = req.body;
+      console.log("Product Quantity Update API Hitting ");
+      const filter = { _id: new ObjectId(id) };
+      const desiredProduct = await farmerProductsCollection.findOne(filter);
+      const quantity = parseInt(desiredProduct.productQuantity);
+      const updateDoc = {
+        $set: {
+          productQuantity: (quantity - decreaseQuantity).toString(),
+        },
+      };
+      const result = await farmerProductsCollection.updateOne(
+        filter,
+        updateDoc
+      );
+      res.send(result);
+    });
+
     //---------------- Demo Products APIs --------------------
     app.get("/demoProducts", async (req, res) => {
       const cursor = demoProductsCollection.find();
