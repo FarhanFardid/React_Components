@@ -1,28 +1,28 @@
+import { useContext, useEffect, useState } from "react";
 import DashboardTitle from "../../../../components/Headers/DashboardTitle";
 import SentMessageList from "./SentMessageList";
+import { AuthContext } from "../../../../context/AuthProvider/AuthProvider";
 
 const BuyerSentMessage = () => {
-  const sentMsgInfo = [
-    {
-      msg_id: "M001",
-      receiver_id: "R223",
-      msgContent: "please provide updates on my order with Id O235",
-      msgTimeStamp: "2024-06-19 14:30:00",
-    },
-    {
-      msg_id: "M002",
-      receiver_id: "R224",
-      msgContent: "Why the order with Id O678 is yet not delivered?. ",
-      msgTimeStamp: "2024-07-02 15:45:00",
-    },
-    {
-      msg_id: "M003",
-      receiver_id: "R225",
-      msgContent:
-        "Hi, I want to modify a order that I have already placed. Is it possible now?",
-      msgTimeStamp: "2024-07-05 16:20:00",
-    },
-  ];
+  const { user } = useContext(AuthContext);
+  const [sentMessages, setSentMessages] = useState([]);
+  const [triggerRefetch, setTriggerRefetch] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        `http://localhost:3000/sentMessagesInfo/${user?.email}`
+      );
+      const data = await response.json();
+      console.log(data);
+      setSentMessages(data);
+    };
+    fetchData();
+  }, [user, triggerRefetch]);
+  console.log(sentMessages);
+
+  const refetchTrigger = () => {
+    setTriggerRefetch(!triggerRefetch);
+  };
   return (
     <div className="custom-buyer-bg bg-no-repeat bg-center p-2 md:p-8 max-h-full md:h-full">
       <DashboardTitle
@@ -40,15 +40,21 @@ const BuyerSentMessage = () => {
               <tr className="text-center font-bold text-black">
                 <th>Sl No.</th>
                 <th>Message Id</th>
-                <th>Receiver Id</th>
-                <th>Message</th>
+                <th>Receiver Email</th>
+                <th>Sent Message</th>
+                <th>Reply Message</th>
                 <th>Message Timestamp</th>
                 <th>Delete</th>
               </tr>
             </thead>
             <tbody className="text-center font-medium">
-              {sentMsgInfo.map((message, index) => (
-                <SentMessageList key={index} message={message} index={index} />
+              {sentMessages.map((message, index) => (
+                <SentMessageList
+                  key={message._id}
+                  msg={message}
+                  index={index}
+                  refetchTrigger={refetchTrigger}
+                />
               ))}
             </tbody>
           </table>

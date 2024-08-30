@@ -29,7 +29,7 @@ const ManagerOrderManagement = () => {
       setOrdersInfo(data);
     };
     fetchOrderData();
-  }, [managerDetails,triggerRefetch]);
+  }, [managerDetails, triggerRefetch]);
   console.log(ordersInfo);
   const handleRefetch = () => {
     setTriggerRefetch(!triggerRefetch);

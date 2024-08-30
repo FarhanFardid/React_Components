@@ -45,7 +45,7 @@ const ProductPipeline = () => {
       <div className="w-full mx-auto p-3 md:p-4 my-5 md:my-8 bg-white bg-opacity-80 rounded-lg shadow-lg">
         <div className="overflow-x-auto">
           <h1 className="text-center text-[#5a9a08] font-semibold text-lg md:text-2xl py-3 md:py-5">
-            Products Pipeline List
+            {managerDetails.location} Products Pipeline List
           </h1>
           <table className="table">
             <thead>

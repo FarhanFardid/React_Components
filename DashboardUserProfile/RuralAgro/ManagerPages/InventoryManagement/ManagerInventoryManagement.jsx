@@ -40,11 +40,8 @@ const ManagerInventoryManagement = () => {
       <div className="w-full mx-auto p-3 md:p-4 my-5 md:my-8 bg-white bg-opacity-80 rounded-lg shadow-lg">
         <div className="overflow-x-auto">
           <h1 className="text-center text-[#409a08] font-semibold text-lg md:text-2xl py-3 md:py-7">
-            Warehouse Inventory List
+            {managerDetails.location} Warehouse Inventory List
           </h1>
-          <h3 className="text-center text-yellow-500 font-semibold text-sm md:text-base py-1 md:py-3">
-            Warehouse Location: {managerDetails.location}
-          </h3>
           <table className="table">
             <thead>
               <tr className="text-center font-bold text-black">

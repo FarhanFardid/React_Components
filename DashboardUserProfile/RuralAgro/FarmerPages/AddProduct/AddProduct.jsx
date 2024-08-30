@@ -25,7 +25,12 @@ const AddProduct = () => {
     const values = Object.fromEntries(formData.entries());
     const farmerEmail = user?.email;
     const farmerLocation = farmerDetails.farmLocation;
-    const productInfo = { ...values, farmerEmail, farmerLocation, status:"Pending" };
+    const productInfo = {
+      ...values,
+      farmerEmail,
+      farmerLocation,
+      status: "Pending",
+    };
     console.log(productInfo);
     fetch("http://localhost:3000/farmerProducts", {
       method: "POST",

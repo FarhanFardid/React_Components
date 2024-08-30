@@ -85,7 +85,9 @@ const ProductPipelineList = ({ product, index, triggerRefetch }) => {
       <td>
         <div className="font-semibold">{productName}</div>
       </td>
-      <td className="mx-auto"><div>{productDescription}</div></td>
+      <td className="mx-auto">
+        <div>{productDescription}</div>
+      </td>
       <td>{productCategory}</td>
       <td>{productPrice}/-</td>
       <td>{productQuantity}</td>

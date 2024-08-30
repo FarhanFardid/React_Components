@@ -66,8 +66,7 @@ const ManagerOrderDetails = () => {
               </p>
 
               <p className="font-medium pb-2 text-xs md:text-sm">
-                <strong>Warehouse: </strong>{" "}
-                <span> {warehouseLocation}</span>
+                <strong>Warehouse: </strong> <span> {warehouseLocation}</span>
               </p>
               <p className="font-medium pb-2 text-xs md:text-sm">
                 <strong>Payment Method:</strong> <span>{PaymentMethod}</span>

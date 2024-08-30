@@ -1,30 +1,27 @@
+import { useContext, useEffect, useState } from "react";
 import DashboardTitle from "../../../../components/Headers/DashboardTitle";
 import ManagerReceivedMsgList from "./ManagerReceivedMsgList";
-
+import { AuthContext } from "../../../../context/AuthProvider/AuthProvider";
 
 const ManagerReceivedMessage = () => {
-    const receivedMsgInfo = [
-        {
-          msg_id: "M001",
-          sender_id: "S123",
-          msgContent: "Please, Provide an update on my Order with Id O2453.",
-          msgTimeStamp: "2024-07-08 10:30:00",
-        },
-        {
-          msg_id: "M002",
-          sender_id: "S124",
-          msgContent: "I want to cancel my order",
-          msgTimeStamp: "2024-07-08 11:45:00",
-        },
-        {
-          msg_id: "M003",
-          sender_id: "S125",
-          msgContent: "any Updates on the reschedule delivery date?",
-          msgTimeStamp: "2024-07-08 12:20:00",
-        },
-      ];
-    return (
-        <div className="custom-manager-bg bg-no-repeat bg-center p-2 md:p-8 max-h-full md:h-full">
+  const { user } = useContext(AuthContext);
+  const [receivedMessages, setReceivedMessages] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        `http://localhost:3000/receivedMessagesInfo/${user?.email}`
+      );
+      const data = await response.json();
+      console.log(data);
+      setReceivedMessages(data);
+    };
+    fetchData();
+  }, [user]);
+  console.log(receivedMessages);
+
+  return (
+    <div className="custom-manager-bg bg-no-repeat bg-center p-2 md:p-8 max-h-full md:h-full">
       <DashboardTitle
         main="Manager Received Messages Hub"
         sub="View and Manage Your Incoming Communication"
@@ -40,23 +37,26 @@ const ManagerReceivedMessage = () => {
               <tr className="text-center font-bold text-black">
                 <th>Sl No.</th>
                 <th>Message Id</th>
-                <th>Sender Id</th>
+                <th>Sender Email</th>
                 <th>Message</th>
                 <th>Message Timestamp</th>
                 <th>Reply</th>
-                <th>Delete</th>
               </tr>
             </thead>
             <tbody className="text-center font-medium">
-              {receivedMsgInfo.map((message, index) => (
-                <ManagerReceivedMsgList key={index} message={message} index={index} />
+              {receivedMessages.map((message, index) => (
+                <ManagerReceivedMsgList
+                  key={message._id}
+                  msg={message}
+                  index={index}
+                />
               ))}
             </tbody>
           </table>
         </div>
       </div>
     </div>
-    );
+  );
 };
 
 export default ManagerReceivedMessage;

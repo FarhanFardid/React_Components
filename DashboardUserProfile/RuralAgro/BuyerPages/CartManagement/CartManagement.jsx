@@ -15,7 +15,7 @@ const CartManagement = () => {
     calculateTotalPrice,
   } = useContext(CartContext);
   console.log(cartItems);
-  
+
   // Load the updated data in the Cart whenever the cartItems is updated
   useEffect(() => {
     const fetchData = async () => {
