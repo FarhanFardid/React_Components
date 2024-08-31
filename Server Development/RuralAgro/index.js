@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
+
 //---------- Port selection --------------
 const port = process.env.PORT || 3000;
 require("dotenv").config();
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+
 //------------ Middlewares --------------
 const cors = require("cors");
 app.use(cors());
@@ -12,6 +14,7 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Rural AgroCommerce Server is Up and Running");
 });
+
 //----------- MongoDB Connection URI ------------------
 const uri = `mongodb+srv://${process.env.DB_User}:${process.env.DB_Password}@cluster0.ypezjyc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
@@ -28,7 +31,7 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     client.connect();
 
-    // ------------- Database Collections --------------------
+    // --------------------------- Database Collections ---------------------------
     const demoProductsCollection = client
       .db("RuralAgroCommerceDB")
       .collection("demoProducts");
@@ -61,8 +64,12 @@ async function run() {
       .db("RuralAgroCommerceDB")
       .collection("buyerOrders");
 
-    //------------- APIs ----------------
-    // ----------------------User APIs -----------------------------
+    const messageCollection = client
+      .db("RuralAgroCommerceDB")
+      .collection("messages");
+
+    //-------------------------------------- APIs -------------------------------------
+    // -------------------------------- User APIs Start --------------------------------
 
     //----------------- All User Info Get API -----------------------
     app.get("/users", async (req, res) => {
@@ -115,7 +122,7 @@ async function run() {
     app.delete("/users/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
-      console.log("User Delete APi Hit");
+      // console.log("User Delete APi Hit");
       const result = await usersCollection.deleteOne(filter);
       res.send(result);
     });
@@ -146,7 +153,8 @@ async function run() {
       const result = { admin: user?.role === "Admin" };
       res.send(result);
     });
-    //---------------------- Farmer APIs  ----------------------
+
+    //-----------------------------  Farmer APIs Start -------------------------------
     // ------------ Farmer Info Post API ------------------
     app.post("/farmers", async (req, res) => {
       const farmerInfo = req.body;
@@ -160,7 +168,8 @@ async function run() {
         res.send(result);
       }
     });
-    // --------------- Farmer Info Get API -------------
+
+    // --------------------- Farmer Info Get API ---------------------
     app.get("/farmers/:email", async (req, res) => {
       const email = req.params.email;
       const query = { email: email };
@@ -168,7 +177,8 @@ async function run() {
       res.send(result);
       // console.log(result);
     });
-    // ----------------- Farmer Profile Info Update API ------------------
+
+    // --------------------- Farmer Profile Info Update API ---------------------
     app.patch("/farmersProfileUpdate/:id", async (req, res) => {
       const id = req.params.id;
       const updateInfo = req.body;
@@ -190,7 +200,7 @@ async function run() {
     app.delete("/farmerDelete/:email", async (req, res) => {
       const email = req.params.email;
       const query = { email: email };
-      console.log("Farmer Delete APi Hit");
+      // console.log("Farmer Delete APi Hit");
       const result = await farmersCollection.deleteOne(query);
       res.send(result);
     });
@@ -207,7 +217,7 @@ async function run() {
     // --------------------- Farmer Products Add API ------------------
     app.post("/farmerProducts", async (req, res) => {
       const productsInfo = req.body;
-      console.log("Product Add Api Hitting");
+      // console.log("Product Add Api Hitting");
       const result = await farmerProductsCollection.insertOne(productsInfo);
       res.send(result);
     });
@@ -216,7 +226,7 @@ async function run() {
     app.get("/farmerProduct/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
-      console.log("Specific Product Get API Hitting");
+      // console.log("Specific Product Get API Hitting");
       const cursor = farmerProductsCollection.find(query);
       const result = await cursor.toArray();
       res.send(result);
@@ -227,7 +237,7 @@ async function run() {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const updatedInfo = req.body;
-      console.log("Product Update API Hitting");
+      // console.log("Product Update API Hitting");
       const updatedDoc = {
         $set: {
           productName: updatedInfo.productName,
@@ -250,14 +260,14 @@ async function run() {
     app.delete("/farmerProductDelete/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
-      console.log("Specific Product Delete API Hitting");
+      // console.log("Specific Product Delete API Hitting");
       const result = await farmerProductsCollection.deleteOne(filter);
       res.send(result);
     });
 
-    //---------------------- Buyer APIs ----------------------
+    //--------------------------- Buyer APIs Start --------------------------
 
-    // ------------ Buyer Info Post API ------------------
+    // ------------------ Buyer Info Post API ------------------
     app.post("/buyers", async (req, res) => {
       const buyerInfo = req.body;
       // console.log(buyerInfo);
@@ -299,7 +309,7 @@ async function run() {
     app.delete("/buyerDelete/:email", async (req, res) => {
       const email = req.params.email;
       const query = { email: email };
-      console.log("Buyer Delete APi Hit");
+      // console.log("Buyer Delete APi Hit");
       const result = await buyersCollection.deleteOne(query);
       res.send(result);
     });
@@ -315,7 +325,7 @@ async function run() {
     // -------------------- Buyer Cart Item Post API -------------------
     app.post("/cart", async (req, res) => {
       const cartItem = req.body;
-      console.log("Cart Post Api Hitting");
+      // console.log("Cart Post Api Hitting");
       const result = await cartCollection.insertOne(cartItem);
       res.send(result);
     });
@@ -324,7 +334,7 @@ async function run() {
     app.patch("/cart/:id", async (req, res) => {
       const id = req.params.id;
       const cartItem = req.body;
-      console.log("Cart Quantity Update API Hitting ");
+      // console.log("Cart Quantity Update API Hitting ");
       const filter = { _id: new ObjectId(id) };
       const updateDoc = {
         $set: {
@@ -339,7 +349,7 @@ async function run() {
     app.delete("/cart/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
-      console.log("Cart item delete API Hitting");
+      // console.log("Cart item delete API Hitting");
       const result = await cartCollection.deleteOne(filter);
       res.send(result);
     });
@@ -356,7 +366,7 @@ async function run() {
     // ------------------------ Buyer Orders Post API --------------------
     app.post("/orders", async (req, res) => {
       const orderInfo = req.body;
-      console.log("Order Info Post API Hitting");
+      // console.log("Order Info Post API Hitting");
       const result = await orderCollection.insertOne(orderInfo);
       res.send(result);
     });
@@ -365,7 +375,7 @@ async function run() {
     app.get("/orders/:email", async (req, res) => {
       const email = req.params.email;
       const query = { buyerEmail: email };
-      console.log("Buyer Specific Order Info Get API Hitting");
+      // console.log("Buyer Specific Order Info Get API Hitting");
       const result = await orderCollection.find(query).toArray();
       res.send(result);
     });
@@ -382,7 +392,7 @@ async function run() {
     // --------------------- Buyer Cart Product Status Update API -------------------
     app.patch("/cartStatus/:id", async (req, res) => {
       const id = req.params.id;
-      console.log("Cart Product Status Update API Hitting ");
+      // console.log("Cart Product Status Update API Hitting ");
       const filter = { _id: new ObjectId(id) };
       const updateDoc = {
         $set: {
@@ -395,7 +405,7 @@ async function run() {
 
     // ----------------- Manager APIs ------------------------
 
-    // ------------  Manager Info Post API ------------------
+    // -------------------  Manager Info Post API ------------------
     app.post("/managers", async (req, res) => {
       const managerInfo = req.body;
       // console.log(managerInfo);
@@ -409,10 +419,19 @@ async function run() {
       }
     });
 
-    // --------------- Manager Info Get API ----------------
+    // ----------------- Manager Info Get API ----------------
     app.get("/managers/:email", async (req, res) => {
       const email = req.params.email;
       const query = { email: email };
+      const result = await managersCollection.findOne(query);
+      res.send(result);
+    });
+
+    // --------------------- Managers Info Get Through Location --------------------
+    app.get("/managerProfileInfo/:location", async (req, res) => {
+      const location = req.params.location;
+      // console.log("Manager Location wise Info API Hitting");
+      const query = { location: location };
       const result = await managersCollection.findOne(query);
       res.send(result);
     });
@@ -421,7 +440,7 @@ async function run() {
     app.patch("/managersProfileUpdate/:id", async (req, res) => {
       const id = req.params.id;
       const updateInfo = req.body;
-      console.log("manager patch API Hitting ");
+      // console.log("manager patch API Hitting ");
       console.log(updateInfo);
       const filter = { _id: new ObjectId(id) };
       const updateDoc = {
@@ -439,7 +458,7 @@ async function run() {
     app.delete("/managerDelete/:email", async (req, res) => {
       const email = req.params.email;
       const query = { email: email };
-      console.log("Manager Delete APi Hit");
+      // console.log("Manager Delete APi Hit");
       const result = await managersCollection.deleteOne(query);
       res.send(result);
     });
@@ -508,9 +527,74 @@ async function run() {
       res.send(result);
     });
 
+    // ------------------------ Messages APIs Start ------------------------
+    
+    // ---------------- New Message POST APi -------------------
+    app.post("/messages", async (req, res) => {
+      const messageInfo = req.body;
+      console.log(messageInfo);
+      console.log("Message Post API Hitting ");
+      const result = await messageCollection.insertOne(messageInfo);
+      res.send(result);
+    });
+
+    // --------------------- Individual Sent Message Get API ---------------------
+    app.get("/sentMessagesInfo/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { senderEmail: email };
+      // console.log("Individual Message Get API Hitting ");
+      const result = await messageCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    // ------------------------ Individual Receive Message Get APi ----------------------
+    app.get("/receivedMessagesInfo/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { receiverEmail: email };
+      // console.log("Individual Received Message API Hitting");
+      const result = await messageCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    // ----------------------- Individual Message Details Get API ------------------------
+    app.get("/messageDetails/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      // console.log("Specific Message Details Get API Hitting");
+      const result = await messageCollection.findOne(filter);
+      res.send(result);
+    });
+
+    // -------------------- Specific Message Reply Set API -------------------
+    app.patch("/messageReplyUpdate/:id", async (req, res) => {
+      const id = req.params.id;
+      const replyInfo = req.body;
+      const filter = { _id: new ObjectId(id) };
+      // console.log("Reply Update API Hitting");
+      console.log(replyInfo);
+      const updateDoc = {
+        $set: {
+          reply: replyInfo.reply,
+          timeStamp: replyInfo.updatedTimeStamp,
+        },
+      };
+      const result = await messageCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
+
+    // -------------------- Specific Message Delete API -----------------------
+    app.delete("/messages/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      // console.log("Specific Message Delete API Hitting");
+      const result = await messageCollection.deleteOne(filter);
+      res.send(result);
+    });
+
     //---------------- All Approved Products Get  API  --------------------
     app.get("/products", async (req, res) => {
       const cursor = farmerProductsCollection.find();
+      console.log("Products APi Hitting");
       const allProducts = await cursor.toArray();
       const result = allProducts.filter(
         (product) => product.status === "Approved"
@@ -523,7 +607,7 @@ async function run() {
       const id = req.params.id;
       const { cartProQuantity } = req.body;
       const filter = { _id: new ObjectId(id) };
-      console.log("product Quantity Check API Hitting ");
+      // console.log("product Quantity Check API Hitting ");
       const product = await farmerProductsCollection.findOne(filter);
       if (product && product.productQuantity >= cartProQuantity) {
         res.json({ isQuantityAvailable: true });
@@ -536,7 +620,7 @@ async function run() {
     app.patch("/productQuantityUpdate/:id", async (req, res) => {
       const id = req.params.id;
       const { decreaseQuantity } = req.body;
-      console.log("Product Quantity Update API Hitting ");
+      // console.log("Product Quantity Update API Hitting ");
       const filter = { _id: new ObjectId(id) };
       const desiredProduct = await farmerProductsCollection.findOne(filter);
       const quantity = parseInt(desiredProduct.productQuantity);
