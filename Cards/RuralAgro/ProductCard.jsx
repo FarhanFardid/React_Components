@@ -49,7 +49,6 @@ const ProductCard = ({ product }) => {
           </span>
         </p>
         <div className="card-actions mt-auto">
-
           {isBuyer && productQuantity > 10 && (
             <button
               onClick={addItemToCart}
@@ -64,7 +63,7 @@ const ProductCard = ({ product }) => {
               onClick={addItemToCart}
               className="bg-yellow-600 text-white btn-md rounded-lg font-bold h-auto w-auto py-2 px-4 md:py-3 md:px-6 text-xs md:text-base mb-4 hover:bg-yellow-800 hover:scale-105"
             >
-              Low Stock 
+              Low Stock
             </button>
           )}
 

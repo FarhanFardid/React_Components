@@ -6,7 +6,7 @@ const Poster = () => {
   return (
     <div className="hero bg-base-200 my-10 md:my-16 bg-green-400">
       <div className="w-full hero-content flex flex-col-reverse md:flex-row-reverse p-5 md:p-14 text-center md:text-left">
-        <img 
+        <img
           src={img}
           className="max-w-full md:max-w-2xl rounded-lg shadow-lg m-2 md:m-4 "
         />
@@ -24,9 +24,7 @@ const Poster = () => {
             their produce, livestock, and handmade goods to a broader audience,
             ensuring fair prices and reducing the dependency on middlemen.
           </p>
-          <button
-            className="bg-green-900 text-yellow-400 btn-md rounded-lg font-bold  hover:text-amber-400 hover:bg-green-700 hover:scale-110 h-auto w-auto py-2 px-4 md:py-3 md:px-6 text-xs md:text-base"
-          >
+          <button className="bg-green-900 text-yellow-400 btn-md rounded-lg font-bold  hover:text-amber-400 hover:bg-green-700 hover:scale-110 h-auto w-auto py-2 px-4 md:py-3 md:px-6 text-xs md:text-base">
             Join now
           </button>
         </div>

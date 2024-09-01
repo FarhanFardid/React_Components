@@ -58,15 +58,15 @@ const HelpSupport = () => {
             <ul>
               <li>
                 {" "}
-                1. Step-by-step guides for placing an order, tracking a shipment,
-                and more.
+                1. Step-by-step guides for placing an order, tracking a
+                shipment, and more.
               </li>
               <li>
                 2. Watch our tutorials to learn about using our services and
                 products.
               </li>
               <li>
-               3. Find detailed instructions on using and maintaining your
+                3. Find detailed instructions on using and maintaining your
                 purchases.
               </li>
             </ul>
@@ -79,14 +79,14 @@ const HelpSupport = () => {
           <p className="text-xs md:text-xl font-medium pt-2 md:pt-3">
             <ul>
               <li>
-              <span className="font-bold text-green-600">Forums and Discussion Boards: </span>
-                 Join our community forums for
-                peer support and advice.
+                <span className="font-bold text-green-600">
+                  Forums and Discussion Boards:{" "}
+                </span>
+                Join our community forums for peer support and advice.
               </li>
               <li>
-              <span className="font-bold text-green-600">User Groups: </span>
-                 Connect with local user groups to share experiences
-                and tips.
+                <span className="font-bold text-green-600">User Groups: </span>
+                Connect with local user groups to share experiences and tips.
               </li>
             </ul>
           </p>
@@ -99,18 +99,25 @@ const HelpSupport = () => {
           <p className="text-xs md:text-xl font-medium pt-2 md:pt-3">
             <ul>
               <li>
-              <span className="font-bold text-green-600"> Troubleshooting Common Issues: </span>
-               Solutions for common technical
-                problems.
+                <span className="font-bold text-green-600">
+                  {" "}
+                  Troubleshooting Common Issues:{" "}
+                </span>
+                Solutions for common technical problems.
               </li>
               <li>
-              <span className="font-bold text-green-600"> System Requirements:</span>  Ensure your system meets our recommended
-                requirements.
+                <span className="font-bold text-green-600">
+                  {" "}
+                  System Requirements:
+                </span>{" "}
+                Ensure your system meets our recommended requirements.
               </li>
               <li>
-              <span className="font-bold text-green-600"> Report a Bug:  </span>
-               Let us know about any technical issues or bugs you
-                encounter.
+                <span className="font-bold text-green-600">
+                  {" "}
+                  Report a Bug:{" "}
+                </span>
+                Let us know about any technical issues or bugs you encounter.
               </li>
             </ul>
           </p>
@@ -122,12 +129,17 @@ const HelpSupport = () => {
           <p className="text-xs md:text-xl font-medium pt-2 md:pt-3">
             <ul>
               <li>
-              <span className="font-bold text-green-600">Submit Feedback:   </span>We value your feedback. Submit your suggestions
-                here.
+                <span className="font-bold text-green-600">
+                  Submit Feedback:{" "}
+                </span>
+                We value your feedback. Submit your suggestions here.
               </li>
               <li>
-              <span className="font-bold text-green-600"> Survey Participation: </span> Help us improve by participating in our
-                user surveys.
+                <span className="font-bold text-green-600">
+                  {" "}
+                  Survey Participation:{" "}
+                </span>{" "}
+                Help us improve by participating in our user surveys.
               </li>
             </ul>
           </p>
