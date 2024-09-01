@@ -1,6 +1,2 @@
 TO DO--
-
-1. DashboardUserProfile pages
-2. Admin
-3. Buyer
-4. Manager
+ALL Ok.

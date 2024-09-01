@@ -1,4 +1,4 @@
-// Need to install swiper.js 
+// Need to install swiper.js
 // Change the image and info as necessary
 
 import { Swiper, SwiperSlide } from "swiper/react";
