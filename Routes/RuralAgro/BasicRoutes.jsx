@@ -139,12 +139,14 @@ const router = createBrowserRouter([
         path: "farmerUpdateProduct/:id",
         element: <ProductUpdate></ProductUpdate>,
         loader: async ({ params }) => {
-          const response = await fetch(`http://localhost:3000/farmerProduct/${params.id}`);
+          const response = await fetch(
+            `http://localhost:3000/farmerProduct/${params.id}`
+          );
           if (!response.ok) {
             throw new Error("Failed to load product data");
           }
           return response.json();
-        }
+        },
       },
       // Farmer Dashboard Routes End
 

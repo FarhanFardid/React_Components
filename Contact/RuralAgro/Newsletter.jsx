@@ -1,5 +1,5 @@
 // Change content as necessary.
- 
+
 const Newsletter = () => {
   return (
     <div className="mb-8 text-center">

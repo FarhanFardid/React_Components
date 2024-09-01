@@ -1,10 +1,10 @@
 // Change info and styling as necessary.
 
-import React from 'react';
-const  BasicInfo = () => {
-    return (
-        <>
-           {/* Basic Contact Info Section */}
+import React from "react";
+const BasicInfo = () => {
+  return (
+    <>
+      {/* Basic Contact Info Section */}
       <div className="flex justify-around mb-8 pt-5 md:pt-16  p-2 md:p-8">
         <div className="text-center bg-slate-100 p-2 md:p-5 rounded-lg">
           <h2 className="text-lg md:text-2xl font-semibold py-2 md:py-3 text-amber-600">
@@ -44,8 +44,8 @@ const  BasicInfo = () => {
           <p>Friday: Closed</p>
         </div>
       </div>
-      </>
-    );
+    </>
+  );
 };
 
 export default BasicInfo;

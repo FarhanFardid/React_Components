@@ -18,8 +18,8 @@ const Error = () => {
           <Link to="/">
             {" "}
             <button className="text-xs md:text-2xl font-medium text-white flex justify-center items-center ">
-              <FaArrowLeft className="md:w-5 md:h-5 mr-1 md:mr-3"></FaArrowLeft> Go Back to
-              Home{" "}
+              <FaArrowLeft className="md:w-5 md:h-5 mr-1 md:mr-3"></FaArrowLeft>{" "}
+              Go Back to Home{" "}
             </button>
           </Link>
         </div>

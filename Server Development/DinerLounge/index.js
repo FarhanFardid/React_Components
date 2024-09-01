@@ -180,7 +180,7 @@ async function run() {
       const id = req.params.id;
       console.log(id);
       if (!ObjectId.isValid(id)) {
-        return res.status(400).send({ message: 'Invalid ID format' });
+        return res.status(400).send({ message: "Invalid ID format" });
       }
       const query = { _id: new ObjectId(id) };
       const result = await menuCollection.deleteOne(query);
@@ -220,7 +220,7 @@ async function run() {
       res.send(result);
     });
 
-   // ----------------------------------
+    // ----------------------------------
     //           Payment Intent  Api
     // ----------------------------------
 

@@ -5,7 +5,7 @@ import { Navigate, useLocation } from "react-router-dom";
 
 const ManagerRoutes = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
-  const {isManager, isManagerLoading} = useManager();
+  const { isManager, isManagerLoading } = useManager();
   const location = useLocation();
 
   if (loading || isManagerLoading) {

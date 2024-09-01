@@ -4,8 +4,10 @@
 import backgroundImage1 from "../../assets/Images/Background image 1.svg";
 const NewsLetter = () => {
   return (
-    <div className="flex flex-col md:flex-row justify-between items-center p-2 md:p-6  rounded-md shadow-md  bg-cover bg-no-repeat bg-center w-full h-auto md:h-[302px] py-5 md:mt-[50px]"
-    style={{ backgroundImage: `url(${backgroundImage1})` }}>
+    <div
+      className="flex flex-col md:flex-row justify-between items-center p-2 md:p-6  rounded-md shadow-md  bg-cover bg-no-repeat bg-center w-full h-auto md:h-[302px] py-5 md:mt-[50px]"
+      style={{ backgroundImage: `url(${backgroundImage1})` }}
+    >
       <div className="flex flex-col mb-4 md:mb-0 md:mr-4 text-white">
         <h2 className="text-2xl md:text-4xl font-bold mb-2 text-center md:text-left">
           Subscribe Our Newsletter

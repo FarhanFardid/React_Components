@@ -2,7 +2,7 @@
 // Change design , content and logo as necessary
 
 import logo from "../../assets/Icons/Logo.svg";
-import icon3 from "../../assets/Icons/Icon 11.svg"
+import icon3 from "../../assets/Icons/Icon 11.svg";
 import icon8 from "../../assets/Icons/Icon 8.svg";
 import icon9 from "../../assets/Icons/Icon 9.svg";
 import icon10 from "../../assets/Icons/Icon 10.svg";

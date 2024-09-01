@@ -62,7 +62,9 @@ async function run() {
     client.connect();
 
     const usersCollection = client.db("SportsDB").collection("users");
-    const instructorsCollection = client.db("SportsDB").collection("instructors");
+    const instructorsCollection = client
+      .db("SportsDB")
+      .collection("instructors");
     const classesCollection = client.db("SportsDB").collection("classes");
     const cartCollection = client.db("SportsDB").collection("cart");
     const paymentCollection = client.db("SportsDB").collection("payments");
@@ -233,27 +235,27 @@ async function run() {
       const result = await classesCollection.updateOne(filter, updateDoc);
       res.send(result);
     });
- 
+
     // ----------------------------------------------------
     //        class available seats and enrolled set api
     // ----------------------------------------------------
-    app.patch("/classes/seats/:id", async(req,res)=>{
+    app.patch("/classes/seats/:id", async (req, res) => {
       const id = req.params.id;
-      const filter = {_id: new ObjectId(id)}
-      const desiredClass = await classesCollection.findOne(filter)
-      const seats = parseFloat(desiredClass.available_seats)
-      const enrolled = parseFloat(desiredClass.total_enrolled)
+      const filter = { _id: new ObjectId(id) };
+      const desiredClass = await classesCollection.findOne(filter);
+      const seats = parseFloat(desiredClass.available_seats);
+      const enrolled = parseFloat(desiredClass.total_enrolled);
       // console.log(desiredClass);
-    
+
       const updateDoc = {
         $set: {
           available_seats: seats - 1,
-          total_enrolled: enrolled + 1
+          total_enrolled: enrolled + 1,
         },
       };
       const result = await classesCollection.updateOne(filter, updateDoc);
       res.send(result);
-    })
+    });
     // ----------------------------
     //       Class Feedback api
     // ----------------------------
@@ -307,7 +309,6 @@ async function run() {
       res.send(result);
     });
 
-
     app.get("/cart", async (req, res) => {
       const email = req.query.email;
       if (!email) {
@@ -353,10 +354,10 @@ async function run() {
       });
     });
 
-        //  ----------------------------
+    //  ----------------------------
     //       Payment Api
     // ------------------------------
-    app.post('/payments', async(req,res)=>{
+    app.post("/payments", async (req, res) => {
       const payment = req.body;
       const result = await paymentCollection.insertOne(payment);
       res.send(result);

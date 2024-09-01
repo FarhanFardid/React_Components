@@ -8,19 +8,18 @@ export const CartProvider = ({ children }) => {
   const userEmail = user?.email;
   const [cartItems, setCartItems] = useState([]);
 
-  
   useEffect(() => {
     if (userEmail) {
       fetchCartDataFromDB();
     }
   }, [userEmail]);
 
-// Cart data fetch from Database using API Call 
+  // Cart data fetch from Database using API Call
   const fetchCartDataFromDB = async () => {
     try {
       const response = await fetch(`http://localhost:3000/cart/${userEmail}`);
       const data = await response.json();
-      const filteredItems =  data.filter((item) => item.status === "pending");
+      const filteredItems = data.filter((item) => item.status === "pending");
       setCartItems(filteredItems);
     } catch (error) {
       console.error("Error fetching cart data:", error);
@@ -52,7 +51,7 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // Update the Quantity of Stored Cart Data 
+  // Update the Quantity of Stored Cart Data
   const updateCartItemInDB = async (cartItem) => {
     try {
       const response = await fetch(
@@ -110,13 +109,13 @@ export const CartProvider = ({ children }) => {
           quantity: cartItems[existingCartItemIndex].quantity + 1,
         };
         // Update the existing item in the database
-        updateCartItemInDB(cartItemToUpdate); 
+        updateCartItemInDB(cartItemToUpdate);
       } else {
         const newCartItem = {
           ...item,
           quantity: 1,
         };
-         // Save the new item to the database
+        // Save the new item to the database
         saveCartDataToDB(newCartItem);
       }
     }
@@ -135,7 +134,7 @@ export const CartProvider = ({ children }) => {
           quantity: item.quantity + 1,
         };
         // Update the item in the database
-        updateCartItemInDB(updatedItem); 
+        updateCartItemInDB(updatedItem);
         return updatedItem;
       }
       return item;
@@ -159,14 +158,14 @@ export const CartProvider = ({ children }) => {
             deleteCartItemFromDB(updatedItem._id);
             return null;
           }
-           // Update the item in the database
+          // Update the item in the database
           updateCartItemInDB(updatedItem);
           return updatedItem;
         }
         return item;
       })
       // Remove any null values (items with quantity <= 0)
-      .filter(Boolean); 
+      .filter(Boolean);
   };
 
   const handleDelete = (cartItem) => {

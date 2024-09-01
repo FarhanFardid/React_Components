@@ -5,7 +5,7 @@ import { Navigate, useLocation } from "react-router-dom";
 
 const BuyerRoutes = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
-  const {isBuyer, isBuyerLoading} = useBuyer();
+  const { isBuyer, isBuyerLoading } = useBuyer();
   const location = useLocation();
 
   if (loading || isBuyerLoading) {

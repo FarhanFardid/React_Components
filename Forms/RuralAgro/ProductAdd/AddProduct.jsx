@@ -1,4 +1,4 @@
-// Change content and styling as necessary. 
+// Change content and styling as necessary.
 import DashboardTitle from "../../../../components/Headers/DashboardTitle";
 import "./addproduct.css";
 
@@ -46,7 +46,7 @@ const AddProduct = () => {
               className="w-full p-2 mt-1 border border-gray-300 rounded-lg box-border resize-y"
               id="product-description"
               name="product-description"
-                     placeholder="Enter product description"
+              placeholder="Enter product description"
               required
             ></textarea>
           </div>
@@ -63,7 +63,7 @@ const AddProduct = () => {
               id="product-price"
               name="product-price"
               step="0.01"
-                     placeholder="Enter product price"
+              placeholder="Enter product price"
               required
             />
           </div>
@@ -78,7 +78,7 @@ const AddProduct = () => {
               className="w-full p-2 mt-1 border border-gray-300 rounded-lg box-border"
               id="product-category"
               name="product-category"
-               placeholder="Enter product category"
+              placeholder="Enter product category"
               required
             >
               <option value="">Select a category</option>
@@ -99,7 +99,7 @@ const AddProduct = () => {
               className="w-full p-2 mt-1 border border-gray-300 rounded-lg box-border"
               id="product-unit"
               name="product-unit"
-               placeholder="Enter product unit"
+              placeholder="Enter product unit"
               required
             >
               <option value="">Select a unit</option>
@@ -125,7 +125,7 @@ const AddProduct = () => {
               type="number"
               id="product-quantity"
               name="product-quantity"
-               placeholder="Enter product quantity"
+              placeholder="Enter product quantity"
               required
             />
           </div>
@@ -142,7 +142,7 @@ const AddProduct = () => {
               id="product-image"
               name="product-image"
               accept="image/*"
-               placeholder="Enter product image"
+              placeholder="Enter product image"
               required
             />
           </div>

@@ -1,4 +1,4 @@
-// Change content and styling as necessary. 
+// Change content and styling as necessary.
 import DashboardTitle from "../../../../components/Headers/DashboardTitle";
 import "../AddProduct/addproduct.css";
 
